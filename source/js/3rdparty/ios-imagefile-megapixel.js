@@ -257,18 +257,4 @@
             URL.revokeObjectURL(this.srcImage.src);
         }
     };
-
-    /**
-     * Export class to global
-     */
-    if (typeof define === 'function' && define.amd) {
-        define([], function () {
-            return MegaPixImage;
-        }); // for AMD loader
-    } else if (typeof exports === 'object') {
-        module.exports = MegaPixImage; // for CommonJS
-    } else {
-        this.MegaPixImage = MegaPixImage;
-    }
-
 })();

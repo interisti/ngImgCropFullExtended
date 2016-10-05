@@ -5,7 +5,7 @@
  * Copyright (c) 2016 Alex Kaul
  * License: MIT
  *
- * Generated at Monday, September 19th, 2016, 9:44:50 AM
+ * Generated at Wednesday, October 5th, 2016, 5:19:22 PM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -3306,7 +3306,12 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
                 if (newVal) {
                     displayLoading();
                 }
-                $timeout(function () {
+                // cancel timeout if necessary
+                if (!!scope.timeout) {
+                    $timeout.cancel(scope.timeout);
+                }
+                scope.timeout = $timeout(function () {
+                    scope.timeout = null;
                     cropHost.setInitMax(scope.initMaxArea);
                     cropHost.setNewImageSource(scope.image);
                 }, 100);
@@ -3604,7 +3609,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
         this.canvas.parentNode.removeChild(this.canvas);
     };
 
-    var ColorThief = function() {};
+    this.ColorThief = function() {};
 
     /*
      * getColor(sourceImage[, quality])
@@ -4164,19 +4169,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
             quantize: quantize
         };
     })();
-
-    /**
-     * Export class to global
-     */
-    if (typeof define === 'function' && define.amd) {
-        define([], function() {
-            return ColorThief;
-        }); // for AMD loader
-    } else if (typeof exports === 'object') {
-        module.exports = ColorThief; // for CommonJS
-    } else {
-        this.ColorThief = ColorThief;
-    }
 }.call(this));
 
 
@@ -4976,11 +4968,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
         return findEXIFinJPEG(file);
     }
 
-    if (typeof define === 'function' && define.amd) {
-        define('exif-js', [], function() {
-            return EXIF;
-        });
-    }
 }.call(this));
 
 
@@ -5242,18 +5229,4 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
             URL.revokeObjectURL(this.srcImage.src);
         }
     };
-
-    /**
-     * Export class to global
-     */
-    if (typeof define === 'function' && define.amd) {
-        define([], function () {
-            return MegaPixImage;
-        }); // for AMD loader
-    } else if (typeof exports === 'object') {
-        module.exports = MegaPixImage; // for CommonJS
-    } else {
-        this.MegaPixImage = MegaPixImage;
-    }
-
 })();
